@@ -1,12 +1,21 @@
 module Owners
   # Traverses up the directory tree starting at a specified
-  # file and returns an array of all parent directories.
+  # file and returns an array of all OWNERS configuration files.
   #
   # @api private
   class Tree
     def initialize(file)
       @file = file
     end
+
+    def files
+      parents.each_with_object([]) do |parent, files|
+        config = parent.join(Owners.file)
+        files << config if config.file?
+      end
+    end
+
+    private
 
     def parents
       parents = []
