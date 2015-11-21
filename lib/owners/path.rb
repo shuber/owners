@@ -30,7 +30,7 @@ module Owners
         file = File.dirname(file)
         config = File.join(file, CONFIG)
 
-        if File.exists?(config) && !File.directory?(config)
+        if File.exist?(config) && !File.directory?(config)
           configs << Config.new(config)
         end
       end
