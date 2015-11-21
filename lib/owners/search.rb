@@ -13,6 +13,8 @@ module Owners
         path = Path.new(path)
 
         path.configs.each do |config|
+          config = Config.new(config)
+
           relative = path.file.sub("#{config.root}/", '')
 
           config.owners.each do |owner, regexes|

@@ -1,7 +1,7 @@
 module Owners
-  # Accepts a single file and returns an array of {Config}
-  # objects that represent the corresponding OWNERS files
-  # found when searching recursively up the directory tree.
+  # Accepts a single file and returns an array of OWNERS
+  # files found when searching recursively up the directory
+  # tree.
   #
   # @api private
   class Path
@@ -22,7 +22,7 @@ module Owners
         config = File.join(file, CONFIG)
 
         if File.exist?(config) && !File.directory?(config)
-          configs << Config.new(config)
+          configs << config
         end
       end
 
