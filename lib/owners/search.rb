@@ -5,7 +5,7 @@ module Owners
     end
 
     def owners
-      paths.flat_map(&:owners).flatten.uniq.sort
+      paths.flat_map(&:owners).uniq.sort
     end
 
     private
