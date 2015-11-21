@@ -5,13 +5,23 @@ module Owners
     end
 
     def owners
-      paths.flat_map(&:owners).uniq.sort
-    end
+      raw = @paths.each_with_object([]) do |path, owners|
+        path = Path.new(path)
 
-    private
+        path.configs.each do |config|
+          relative = path.file.sub("#{config.root}/", '')
 
-    def paths
-      @paths.map { |path| Path.new(path) }
+          config.owners.each do |owner, regexes|
+            regexes.each do |regex|
+              if relative =~ regex
+                owners << owner
+              end
+            end
+          end
+        end
+      end
+      
+      raw.uniq.sort
     end
   end
 end
