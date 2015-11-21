@@ -1,4 +1,8 @@
 module Owners
+  # Accepts an array of file paths and returns an array of
+  # owners that have subscribed to the specified files.
+  #
+  # @api private
   class Search
     def initialize(paths)
       @paths = paths
