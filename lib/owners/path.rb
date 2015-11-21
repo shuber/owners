@@ -1,7 +1,6 @@
 module Owners
   # Accepts a single file and returns an array of OWNERS
-  # files found when searching recursively up the directory
-  # tree.
+  # files found when searching recursively up the tree.
   #
   # @api private
   class Path
