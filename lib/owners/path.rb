@@ -20,10 +20,7 @@ module Owners
       until file == file.dirname
         file = file.dirname
         config = file.join(CONFIG)
-
-        if config.exist? && !config.directory?
-          configs << config
-        end
+        configs << config if config.file?
       end
 
       configs
