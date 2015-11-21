@@ -17,7 +17,7 @@ module Owners
       configs = []
       file = @file
 
-      until file.dirname == file
+      until file == file.dirname
         file = file.dirname
         config = file.join(CONFIG)
 
