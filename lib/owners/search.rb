@@ -18,18 +18,23 @@ module Owners
     private
 
     def search(&block)
-      paths.product(configs).each_with_object(SortedSet.new, &block).to_a
+      attempts.each_with_object(SortedSet.new, &block).to_a
+    end
+
+    def attempts
+      paths.product(configs)
     end
 
     def configs
-      directories.uniq.each_with_object([]) do |dir, configs|
-        path = dir.join(Owners.file)
-        configs << Config.new(path) if path.file?
-      end
+      files.map { |file| Config.new(file) }
     end
 
-    def directories
-      paths.flat_map { |path| Tree.new(path).parents }
+    def files
+      trees.flat_map(&:files).uniq
+    end
+
+    def trees
+      paths.map { |path| Tree.new(path) }
     end
 
     def paths
