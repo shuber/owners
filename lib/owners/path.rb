@@ -17,11 +17,11 @@ module Owners
       configs = []
       file = @file
 
-      until ['.', '/'].include?(file)
-        file = File.dirname(file)
-        config = File.join(file, CONFIG)
+      until file.dirname == file
+        file = file.dirname
+        config = file.join(CONFIG)
 
-        if File.exist?(config) && !File.directory?(config)
+        if config.exist? && !config.directory?
           configs << config
         end
       end

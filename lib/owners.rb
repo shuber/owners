@@ -1,3 +1,4 @@
+require 'pathname'
 require 'owners/config'
 require 'owners/path'
 require 'owners/search'
@@ -9,6 +10,7 @@ module Owners
   #
   # @api public
   def self.for(*paths)
+    paths.map! { |path| Pathname.new(path) }
     Search.new(paths).owners
   end
 end

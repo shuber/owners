@@ -7,8 +7,8 @@ module Owners
     attr_reader :root
 
     def initialize(file)
-      @config = File.read(file)
-      @root = File.dirname(file)
+      @config = file.read
+      @root = file.dirname
     end
 
     def owners
