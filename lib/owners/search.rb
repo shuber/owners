@@ -4,8 +4,8 @@ module Owners
   #
   # @api private
   class Search
-    def initialize(paths)
-      @paths = paths
+    def initialize(files)
+      @files = files
     end
 
     def owners
@@ -26,11 +26,11 @@ module Owners
     end
 
     def configs
-      files.map { |file| Config.new(file) }
+      subscriptions.map { |file| Config.new(file) }
     end
 
-    def files
-      trees.flat_map(&:files).uniq
+    def subscriptions
+      trees.flat_map(&:owner_files).uniq
     end
 
     def trees
@@ -38,7 +38,7 @@ module Owners
     end
 
     def paths
-      @paths.map { |path| Pathname.new(path) }
+      @files.map { |file| Pathname.new(file) }
     end
   end
 end

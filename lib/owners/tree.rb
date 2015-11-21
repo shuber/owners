@@ -1,6 +1,6 @@
 module Owners
   # Traverses up the directory tree starting at a specified
-  # file and returns an array of all OWNERS configuration files.
+  # file and returns an array of all OWNERS files.
   #
   # @api private
   class Tree
@@ -8,7 +8,7 @@ module Owners
       @file = file
     end
 
-    def files
+    def owner_files
       parents.each_with_object([]) do |parent, files|
         config = parent.join(Owners.file)
         files << config if config.file?

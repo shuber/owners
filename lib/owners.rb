@@ -22,8 +22,8 @@ module Owners
     # owners that have subscribed to the specified files.
     #
     # @api public
-    def for(*paths)
-      Search.new(paths).owners
+    def for(*files)
+      Search.new(files).owners
     end
   end
 end
