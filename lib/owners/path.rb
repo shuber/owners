@@ -5,8 +5,6 @@ module Owners
   #
   # @api private
   class Path
-    CONFIG = 'OWNERS'
-
     attr_reader :file
 
     def initialize(file)
@@ -19,7 +17,7 @@ module Owners
 
       until file == file.dirname
         file = file.dirname
-        config = file.join(CONFIG)
+        config = file.join(Owners.file)
         configs << config if config.file?
       end
 
