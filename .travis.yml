@@ -1,0 +1,11 @@
+addons:
+  code_climate:
+    repo_token: ca03d82be038f1e592be540bc81030c2cc69101d13f99acfd1889bbd47d17824
+
+install: bundle install --jobs 3 --retry 3
+
+rvm:
+  - 2.0.0
+  - ruby-head
+
+script: bundle exec rspec
