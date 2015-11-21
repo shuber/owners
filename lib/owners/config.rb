@@ -1,6 +1,6 @@
 module Owners
-  # Parses an OWNERS file and returns a hash of subscribers
-  # along with the files and patterns that each subscribes to.
+  # Parses an OWNERS file and returns an array of owners
+  # that have subscribed to a specified file path.
   #
   # @api private
   class Config
