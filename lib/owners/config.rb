@@ -11,11 +11,11 @@ module Owners
 
     def owners(path)
       if path.start_with?(@root)
-        relative = path.sub("#{@root}/", '')
+        relative = path.sub("#{@root}/", "")
 
         search do |subscription, results|
           owner, pattern = subscription.split(/\s+/, 2)
-          regex = Regexp.new(pattern || '.*')
+          regex = Regexp.new(pattern || ".*")
           results << owner if regex =~ relative
         end
       end

@@ -1,5 +1,5 @@
-source 'https://www.rubygems.org'
+source "https://www.rubygems.org"
 
 gemspec
 
-gem 'codeclimate-test-reporter'
+gem "codeclimate-test-reporter"
