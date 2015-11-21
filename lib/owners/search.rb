@@ -19,7 +19,7 @@ module Owners
 
           config.owners.each do |owner, regexes|
             regexes.each do |regex|
-              if relative =~ regex
+              if relative.to_s =~ regex
                 owners << owner
               end
             end
