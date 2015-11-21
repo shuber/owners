@@ -17,7 +17,7 @@ module Owners
 
           relative = path.file.sub("#{config.root}/", '')
 
-          config.owners.each do |owner, regexes|
+          config.subscribers.each do |owner, regexes|
             regexes.each do |regex|
               if relative.to_s =~ regex
                 owners << owner
