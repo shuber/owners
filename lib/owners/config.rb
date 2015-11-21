@@ -1,6 +1,6 @@
 module Owners
   # Parses an OWNERS file and returns a hash of subscribers
-  # with the files and patterns that each subscribes to.
+  # along with the files and patterns that each subscribes to.
   #
   # @api private
   class Config
@@ -11,7 +11,7 @@ module Owners
       @root = file.dirname
     end
 
-    def owners
+    def subscribers
       subscriptions.each_with_object({}) do |line, hash|
         owner, path = line.split(/\s+/, 2).push('.*')
         hash[owner] ||= []
