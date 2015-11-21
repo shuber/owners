@@ -9,7 +9,7 @@ module Owners
     end
 
     def owners
-      raw = @paths.each_with_object([]) do |path, owners|
+      raw = paths.each_with_object([]) do |path, owners|
         path = Path.new(path)
 
         path.configs.each do |config|
@@ -28,6 +28,12 @@ module Owners
       end
       
       raw.uniq.sort
+    end
+
+    private
+
+    def paths
+      @paths.map { |path| Pathname.new(path) }
     end
   end
 end
