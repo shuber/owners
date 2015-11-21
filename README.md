@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/shuber/owners.svg)](http://travis-ci.org/shuber/owners) [![Code Climate](https://codeclimate.com/github/shuber/owners/badges/gpa.svg)](https://codeclimate.com/github/shuber/owners) [![Coverage](https://codeclimate.com/github/shuber/owners/badges/coverage.svg)](https://codeclimate.com/github/shuber/owners) [![Gem Version](https://badge.fury.io/rb/owners.svg)](http://badge.fury.io/rb/owners)
 
-Take ownership of your code
+Take ownership of your code.
 
 
 ## Installation
@@ -34,7 +34,7 @@ The `OWNERS` file also supports limiting paths with regular expressions or exact
 bob@demo.com  lib/bobs_special_file.rb
 ```
 
-Once your `OWNERS` files are defined, you can search for a list of owners by calling `Owners.for` with a list of paths e.g. output from `git diff --name-only`
+Once your `OWNERS` files are defined, you can search for a list of owners by calling `Owners.for` with a list of paths e.g. output from `git diff --name-only`.
 
 ```ruby
 Owners.for(".env", "app/controllers/posts_controller.rb", "app/models/user.rb")
