@@ -22,7 +22,6 @@ module Owners
     #
     # @api public
     def for(*paths)
-      paths.map! { |path| Pathname.new(path) }
       Search.new(paths).owners
     end
   end
