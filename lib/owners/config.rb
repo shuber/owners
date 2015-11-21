@@ -4,22 +4,28 @@ module Owners
   #
   # @api private
   class Config
-    attr_reader :root
-
     def initialize(file)
       @config = file.read
-      @root = file.dirname
+      @root = file.dirname.to_s
     end
 
-    def subscribers
-      subscriptions.each_with_object({}) do |line, hash|
-        owner, path = line.split(/\s+/, 2).push('.*')
-        hash[owner] ||= []
-        hash[owner] << Regexp.new(path)
+    def owners(path)
+      if path.start_with?(@root)
+        relative = path.sub("#{@root}/", '')
+
+        search do |subscription, results|
+          owner, pattern = subscription.split(/\s+/, 2)
+          regex = Regexp.new(pattern || '.*')
+          results << owner if regex =~ relative
+        end
       end
     end
 
     private
+
+    def search(&block)
+      subscriptions.each_with_object([], &block)
+    end
 
     def subscriptions
       @config.split("\n").reject(&:empty?)

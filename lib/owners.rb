@@ -1,7 +1,8 @@
 require 'pathname'
+require 'set'
 require 'owners/config'
-require 'owners/path'
 require 'owners/search'
+require 'owners/tree'
 require 'owners/version'
 
 module Owners
