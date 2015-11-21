@@ -1,9 +1,9 @@
-require 'pathname'
-require 'set'
-require 'owners/config'
-require 'owners/search'
-require 'owners/tree'
-require 'owners/version'
+require "pathname"
+require "set"
+require "owners/config"
+require "owners/search"
+require "owners/tree"
+require "owners/version"
 
 module Owners
   class << self
@@ -15,7 +15,7 @@ module Owners
     #
     # @api public
     def file
-      @file ||= 'OWNERS'
+      @file ||= "OWNERS"
     end
 
     # Accepts a list of file paths and returns an array of
