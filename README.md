@@ -16,7 +16,7 @@ gem install owners
 
 Define an `OWNERS` file in any directory within your repository. This file should contain a newline separated list of subscribers to notify when files within the directory have changed. The `OWNERS` files are searched recursively up the tree to make organizing owners more convenient.
 
-Subscribers can be anything that suits your needs e.g. emails, GitHub handles, or Slack channels.
+Subscribers can be anything that suits your needs e.g. emails, GitHub handles, Slack channels, etc.
 
 ```
 bob@your-org.com
@@ -40,7 +40,7 @@ Once your `OWNERS` files are defined, you can search for a list of owners by cal
 Owners.for(".env", "app/controllers/posts_controller.rb", "app/models/user.rb")
 ```
 
-This method returns a unique array of all the owners who have subscribed to changes for the specified files.
+This method returns a unique array of all the owners who have subscribed to changes for the specified files. These subscribers can then be notified however you see fit!
 
 ## API
 
