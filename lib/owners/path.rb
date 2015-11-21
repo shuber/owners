@@ -2,25 +2,11 @@ module Owners
   class Path
     CONFIG = 'OWNERS'
 
+    attr_reader :file
+
     def initialize(file)
       @file = file
     end
-
-    def owners
-      configs.each_with_object([]) do |config, owners|
-        path = @file.sub("#{config.root}/", '')
-
-        config.owners.each do |owner, regexes|
-          regexes.each do |regex|
-            if path =~ regex
-              owners << owner
-            end
-          end
-        end
-      end
-    end
-
-    private
 
     def configs
       configs = []
