@@ -46,6 +46,8 @@ This method returns a unique array of all the owners who have subscribed to chan
 
 [YARD Documentation](http://www.rubydoc.info/github/shuber/owners)
 
+* `Owners.file`
+* `Owners.file=`
 * `Owners.for`
 
 
