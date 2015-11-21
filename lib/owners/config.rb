@@ -1,4 +1,8 @@
 module Owners
+  # Parses an OWNERS file and returns a hash of subscribers
+  # with the files and patterns that each subscribes to.
+  #
+  # @api private
   class Config
     attr_reader :root
 

@@ -1,4 +1,9 @@
 module Owners
+  # Accepts a single file and returns an array of {Config}
+  # objects that represent the corresponding OWNERS files
+  # found when searching recursively up the directory tree.
+  #
+  # @api private
   class Path
     CONFIG = 'OWNERS'
 
