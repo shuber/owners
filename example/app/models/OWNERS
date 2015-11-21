@@ -1,0 +1,3 @@
+data@example.com
+@blogger ^blog\.rb$
+@whitespace      post.rb
