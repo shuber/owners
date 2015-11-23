@@ -4,6 +4,14 @@
 
 Take ownership of your code.
 
+Knowing who owns a project or section of a code base is very helpful when asking questions or requesting feedback. This gem allows developers to define `OWNERS` files throughout their repository to provide a human and machine readable way to determine who the maintainers are for specific files of code.
+
+These files can be used to:
+
+* find the right people to ask when you have questions
+* notify maintainers when changes occur in the files that they care about
+* enforce approval from the appropriate people in pull requests
+
 
 ## Installation
 
@@ -26,7 +34,7 @@ jane@your-org.com
 #some_slack_channel
 ```
 
-The `OWNERS` file also supports limiting paths with regular expressions or exact matches. Any whitespace that separates the subscriber from the path limiters are ignored.
+The `OWNERS` file also supports limiting paths with regular expressions. Any whitespace that separates the subscriber from the path limiters is ignored.
 
 ```
 @data         app/models/.*
@@ -34,13 +42,21 @@ The `OWNERS` file also supports limiting paths with regular expressions or exact
 bob@demo.com  lib/bobs_special_file.rb
 ```
 
-Once your `OWNERS` files are defined, you can search for a list of owners by calling `Owners.for` with a list of paths e.g. output from `git diff --name-only`.
+Find the owners for specific files by passing them to the `Owners.for` method.
 
 ```ruby
 Owners.for(".env", "app/controllers/posts_controller.rb", "app/models/user.rb")
 ```
 
+This works well when comparing the files changed between `git` branches.
+
+```ruby
+files = `git diff --name-only master`.split("\n")
+Owners.for(*files)
+```
+
 This method returns a unique array of all the owners who have subscribed to changes for the specified files. These subscribers can then be notified however you see fit!
+
 
 ## API
 
