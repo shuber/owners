@@ -21,6 +21,14 @@ RSpec.describe Owners do
       end
     end
 
+    context "with no paths" do
+      let(:paths) { [] }
+
+      it "parses owners correctly" do
+        expect(subject).to eq([])
+      end
+    end
+
     context "with no matches" do
       let(:paths) { ["some-path-without-owners"] }
 
