@@ -58,6 +58,17 @@ Owners.for(*files)
 This method returns a unique array of all the owners who have subscribed to changes for the specified files. These subscribers can then be notified however you see fit!
 
 
+## CLI
+
+This gem also comes with a convenient `owners` command line interface. A list of owners will be printed out and separated by newlines.
+
+```bash
+owners for .env app/controllers/posts_controller.rb app/models/user.rb
+```
+
+See `owners help` for more information.
+
+
 ## API
 
 [YARD Documentation](http://www.rubydoc.info/github/shuber/owners)
