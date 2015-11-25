@@ -1,9 +1,11 @@
 require "pathname"
 require "set"
-require "owners/config"
-require "owners/search"
-require "owners/tree"
-require "owners/version"
+require "thor"
+require_relative "owners/cli"
+require_relative "owners/config"
+require_relative "owners/search"
+require_relative "owners/tree"
+require_relative "owners/version"
 
 module Owners
   class << self
