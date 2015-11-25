@@ -60,7 +60,7 @@ This method returns a unique array of all the owners who have subscribed to chan
 
 ## CLI
 
-This gem also comes with a convenient `owners` command line interface. A list of owners will be printed out and separated by newlines.
+This gem also comes with a convenient `owners` command line interface. Each owner is printed out and separated by newlines.
 
 ```bash
 owners for .env app/controllers/posts_controller.rb app/models/user.rb
