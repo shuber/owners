@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.version               = Owners::VERSION
 
   s.add_development_dependency "rspec"
+  s.add_dependency "thor"
 end
