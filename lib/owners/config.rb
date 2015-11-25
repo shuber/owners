@@ -5,7 +5,7 @@ module Owners
   # @api private
   class Config
     def initialize(file)
-      @config = file.read
+      @contents = file.read
       @root = file.dirname.to_s
     end
 
@@ -28,7 +28,7 @@ module Owners
     end
 
     def subscriptions
-      @config.split("\n").reject(&:empty?)
+      @contents.split("\n").reject(&:empty?)
     end
   end
 end

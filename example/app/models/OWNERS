@@ -1,3 +1,6 @@
 data@example.com
 @blogger ^blog\.rb$
 @whitespace      post.rb
+
+@owner comment.rb
+@duplicate comment.rb

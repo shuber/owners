@@ -52,5 +52,13 @@ RSpec.describe Owners do
         expect(subject).to eq(["@org/blog", "@whitespace", "data@example.com"])
       end
     end
+
+    context "with multiple owners" do
+      let(:paths) { ["example/app/models/comment.rb"] }
+
+      it "parses owners correctly" do
+        expect(subject).to eq(["@duplicate", "@org/blog", "@owner", "data@example.com"])
+      end
+    end
   end
 end
