@@ -38,7 +38,10 @@ module Owners
     end
 
     def paths
-      @files.map { |file| Pathname.new(file) }
+      @files.map do |file|
+        file.prepend("./") unless file =~ /^\.?\//
+        Pathname.new(file)
+      end
     end
   end
 end
