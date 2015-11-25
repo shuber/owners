@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    owners (0.0.1)
+    owners (0.0.2)
       thor
 
 GEM
