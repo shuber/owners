@@ -11,9 +11,9 @@ module Owners
 
     desc "for_diff REF [BASE_REF]", "List owners for a set of git changes"
     method_option :file, desc: "The name of the OWNERS file"
-    def for_git(ref, base_ref = "master")
+    def for_diff(ref, base_ref = "master")
       Owners.file = options[:file] if options[:file]
-      Owners.for_git(ref, base_ref).each do |owner|
+      Owners.for_diff(ref, base_ref).each do |owner|
         puts owner
       end
     end
