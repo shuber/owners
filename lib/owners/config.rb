@@ -10,8 +10,8 @@ module Owners
     end
 
     def owners(path)
-      if path.start_with?(@root)
-        relative = path.sub("#{@root}/", "")
+      if path =~ prefix
+        relative = path.sub(prefix, "")
 
         search do |subscription, results|
           owner, pattern = subscription.split(/\s+/, 2)
@@ -22,6 +22,10 @@ module Owners
     end
 
     private
+
+    def prefix
+      /\.?\/?#{@root}\//
+    end
 
     def search(&block)
       subscriptions.each_with_object([], &block)

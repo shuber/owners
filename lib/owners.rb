@@ -36,7 +36,10 @@ module Owners
     # @api public
     def for_diff(ref, base = "master")
       files = `git diff --name-only #{base}...#{ref}`.split("\n")
-      blobs = `git ls-tree -r #{ref} -- "**/#{file}"`.split("\n")
+
+      # TODO: why doesn't this work? It works in the command line...
+      # blobs = `git ls-tree -r #{ref} | **/#{file}`.split("\n")
+      blobs = `git ls-tree -r #{ref} | egrep "(^|/)#{file}$"`.split("\n")
 
       configs = blobs.reduce({}) do |hash, line|
         _, _, sha, file = line.split(/\s+/, 4)
