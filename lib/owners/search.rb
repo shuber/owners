@@ -4,8 +4,9 @@ module Owners
   #
   # @api private
   class Search
-    def initialize(files)
+    def initialize(files, configs = nil)
       @files = files
+      @configs = configs
     end
 
     def owners
@@ -26,7 +27,11 @@ module Owners
     end
 
     def configs
-      subscriptions.map { |file| Config.new(file) }
+      if @configs
+        @configs.map { |file, contents| Config.new(file, contents) }
+      else
+        subscriptions.map { |file| Config.new(file) }
+      end
     end
 
     def subscriptions

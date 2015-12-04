@@ -61,4 +61,26 @@ RSpec.describe Owners do
       end
     end
   end
+
+  describe ".for_diff" do
+    subject { described_class.for_diff(ref, base_ref) }
+
+    context "when comparing one commit" do
+      let(:ref) { "0757297" }
+      let(:base_ref) { "6683118" }
+
+      it "parses owners correctly" do
+        expect(subject).to eq(["@org/blog"])
+      end
+    end
+
+    context "when comparing multiple commits" do
+      let(:ref) { "0757297" }
+      let(:base_ref) { "d0e67df" }
+
+      it "parses owners correctly" do
+        expect(subject).to eq(["@org/blog", "@whitespace", "data@example.com"])
+      end
+    end
+  end
 end

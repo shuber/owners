@@ -48,11 +48,10 @@ Find the owners for specific files by passing them to the `Owners.for` method.
 Owners.for(".env", "app/controllers/posts_controller.rb", "app/models/user.rb")
 ```
 
-This works well when comparing the files changed between `git` branches.
+To find the owners for files changed with `git diff` use the `Owners.for_diff` method.
 
 ```ruby
-files = `git diff --name-only master`.split("\n")
-Owners.for(*files)
+Owners.for_diff("your-feature-branch-or-ref", "optional-base-ref-defaults-to-master")
 ```
 
 This method returns a unique array of all the owners who have subscribed to changes for the specified files. These subscribers can then be notified however you see fit!
@@ -66,6 +65,10 @@ This gem also comes with a convenient `owners` command line interface. Each owne
 owners for .env app/controllers/posts_controller.rb app/models/user.rb
 ```
 
+```bash
+owners for_diff my-feature-branch
+```
+
 See `owners help` for more information.
 
 
@@ -76,6 +79,7 @@ See `owners help` for more information.
 * `Owners.file`
 * `Owners.file=`
 * `Owners.for`
+* `Owners.for_diff`
 
 
 ## Testing
