@@ -4,9 +4,9 @@ module Owners
   #
   # @api private
   class Config
-    def initialize(file)
-      @contents = file.read
-      @root = file.dirname.to_s
+    def initialize(file, contents = nil)
+      @contents = contents || file.read
+      @root = File.dirname(file.to_s)
     end
 
     def owners(path)
