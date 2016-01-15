@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.test_files            = `git ls-files -- spec/*`.split("\n")
   s.version               = Owners::VERSION
 
+  s.bindir = "bin"
   s.executables << "owners"
 
   s.add_development_dependency "rspec"
