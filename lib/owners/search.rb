@@ -5,7 +5,7 @@ module Owners
   # @api private
   class Search
     def initialize(files, configs = nil)
-      @files = files
+      @files = files.map(&:dup)
       @configs = configs
     end
 
