@@ -24,15 +24,6 @@ module Owners
 
     private
 
-    def subscribers(path, subscription)
-      subscribers, pattern = subscription.split(/\s+/, 2)
-      regex = Regexp.new(pattern || ".*")
-
-      subscribers.split(",").tap do |owners|
-        owners.clear unless regex =~ path
-      end
-    end
-
     def prefix
       /\.?\/?#{@root}\//
     end
@@ -44,6 +35,15 @@ module Owners
     def subscriptions
       @contents.split("\n").reject do |subscription|
         subscription.empty? || subscription =~ COMMENT
+      end
+    end
+
+    def subscribers(path, subscription)
+      subscribers, pattern = subscription.split(/\s+/, 2)
+      regex = Regexp.new(pattern || ".*")
+
+      subscribers.split(",").tap do |owners|
+        owners.clear unless regex =~ path
       end
     end
   end
