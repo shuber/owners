@@ -14,14 +14,22 @@ module Owners
         relative = path.sub(prefix, "")
 
         search do |subscription, results|
-          owner, pattern = subscription.split(/\s+/, 2)
-          regex = Regexp.new(pattern || ".*")
-          results << owner if regex =~ relative
+          owners = subscribers(relative, subscription)
+          results.push(*owners)
         end
       end
     end
 
     private
+
+    def subscribers(path, subscription)
+      subscribers, pattern = subscription.split(/\s+/, 2)
+      regex = Regexp.new(pattern || ".*")
+
+      subscribers.split(",").tap do |owners|
+        owners.clear unless regex =~ path
+      end
+    end
 
     def prefix
       /\.?\/?#{@root}\//

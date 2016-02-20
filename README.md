@@ -34,18 +34,32 @@ jane@your-org.com
 #some_slack_channel
 ```
 
-The `OWNERS` file also supports limiting paths with regular expressions. Any whitespace that separates the subscriber from the path limiters is ignored.
+The `OWNERS` file also supports filtering paths with regular expressions. Any whitespace between these filters and their corresponding subscribers is ignored.
 
 ```
 @data         app/models/.*
 @ui           \.(css|haml|js|scss)$
 bob@demo.com  lib/bobs_special_file.rb
+#whitespace   path/with spaces/is all part/of the filter.txt
+```
+
+Subscribers can be listed multiple times in an `OWNERS` file.
+
+```
+@data app/models
+@data db
+```
+
+Multiple comma separated subscribers can be listed for the same filter.
+
+```
+@data,@team-leads db
 ```
 
 Find the owners for specific files by passing them to the `Owners.for` method.
 
 ```ruby
-Owners.for(".env", "app/controllers/posts_controller.rb", "app/models/user.rb")
+Owners.for("app/models/user.rb", "db/schema.rb") #=> ["@data", "@team-leads"]
 ```
 
 To find the owners for files changed with `git diff` use the `Owners.for_diff` method.
@@ -53,8 +67,6 @@ To find the owners for files changed with `git diff` use the `Owners.for_diff` m
 ```ruby
 Owners.for_diff("your-feature-branch-or-ref", "optional-base-ref-defaults-to-master")
 ```
-
-This method returns a unique array of all the owners who have subscribed to changes for the specified files. These subscribers can then be notified however you see fit!
 
 
 ## CLI
@@ -64,6 +76,14 @@ This gem also comes with a convenient `owners` command line interface. Each owne
 ```bash
 owners for .env app/controllers/posts_controller.rb app/models/user.rb
 ```
+
+```
+@infrastructure
+@api
+@data
+```
+
+The `git diff` integration works in the command line as well.
 
 ```bash
 owners for_diff my-feature-branch
