@@ -68,14 +68,22 @@ RSpec.describe Owners do
         expect(subject).to eq(["@multiple", "@org/blog", "@owners"])
       end
     end
+
+    context "with comments" do
+      let(:paths) { ["example/comment"] }
+
+      it "parses owners correctly" do
+        expect(subject).to eq(["@org/blog"])
+      end
+    end
   end
 
   describe ".for_diff" do
     subject { described_class.for_diff(ref, base_ref) }
 
     context "when comparing one commit" do
-      let(:ref) { "0757297" }
-      let(:base_ref) { "6683118" }
+      let(:ref) { "781b3b2" }
+      let(:base_ref) { "6f4f89a" }
 
       it "parses owners correctly" do
         expect(subject).to eq(["@org/blog"])
@@ -83,8 +91,8 @@ RSpec.describe Owners do
     end
 
     context "when comparing multiple commits" do
-      let(:ref) { "0757297" }
-      let(:base_ref) { "d0e67df" }
+      let(:ref) { "781b3b2" }
+      let(:base_ref) { "ba7cd78" }
 
       it "parses owners correctly" do
         expect(subject).to eq(["@org/blog", "@whitespace", "data@example.com"])

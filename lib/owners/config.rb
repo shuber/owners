@@ -4,6 +4,8 @@ module Owners
   #
   # @api private
   class Config
+    COMMENT = /^\s*\/\//
+
     def initialize(file, contents = nil)
       @contents = contents || file.read
       @root = File.dirname(file.to_s)
@@ -40,7 +42,9 @@ module Owners
     end
 
     def subscriptions
-      @contents.split("\n").reject(&:empty?)
+      @contents.split("\n").reject do |subscription|
+        subscription.empty? || subscription =~ COMMENT
+      end
     end
   end
 end

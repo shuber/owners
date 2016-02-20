@@ -56,6 +56,16 @@ Multiple comma separated subscribers can be listed for the same filter.
 @data,@team-leads db
 ```
 
+Comments are supported by prefixing lines with `//`.
+
+```
+// this comment will be ignored
+//// this one two
+  // even this one with whitespace
+
+@data,@team-leads db
+```
+
 Find the owners for specific files by passing them to the `Owners.for` method.
 
 ```ruby
