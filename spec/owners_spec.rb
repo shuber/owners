@@ -68,6 +68,14 @@ RSpec.describe Owners do
         expect(subject).to eq(["@multiple", "@org/blog", "@owners"])
       end
     end
+
+    context "with comments" do
+      let(:paths) { ["example/comment"] }
+
+      it "parses owners correctly" do
+        expect(subject).to eq(["@org/blog"])
+      end
+    end
   end
 
   describe ".for_diff" do
