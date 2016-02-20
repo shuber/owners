@@ -60,6 +60,14 @@ RSpec.describe Owners do
         expect(subject).to eq(["@duplicate", "@org/blog", "@owner", "data@example.com"])
       end
     end
+
+    context "with multiple comma separated owners" do
+      let(:paths) { ["example/db/schema.rb"] }
+
+      it "parses owners correctly" do
+        expect(subject).to eq(["@multiple", "@org/blog", "@owners"])
+      end
+    end
   end
 
   describe ".for_diff" do
