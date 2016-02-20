@@ -35,7 +35,7 @@ RSpec.describe Owners::CLI do
   end
 
   describe "for_diff" do
-    let(:args) { ["for_diff", "0757297", "d0e67df"] }
+    let(:args) { ["for_diff", "781b3b2", "ba7cd78"] }
 
     context "without a specified file" do
       it "parses owners correctly" do
