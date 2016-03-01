@@ -17,7 +17,7 @@ RSpec.describe Owners do
       ]}
 
       it "parses owners correctly" do
-        expect(subject).to eq(["@org/auth", "@org/blog", "data@example.com"])
+        expect(subject).to eq(["@org/blog", "@org/auth", "data@example.com"])
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe Owners do
       let(:paths) { ["example/app/models/blog.rb"] }
 
       it "parses owners correctly" do
-        expect(subject).to eq(["@blogger", "@org/blog", "data@example.com"])
+        expect(subject).to eq(["data@example.com", "@blogger", "@org/blog"])
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe Owners do
       let(:paths) { ["example/app/models/post.rb"] }
 
       it "parses owners correctly" do
-        expect(subject).to eq(["@org/blog", "@whitespace", "data@example.com"])
+        expect(subject).to eq(["data@example.com", "@whitespace", "@org/blog"])
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Owners do
       let(:paths) { ["example/app/models/comment.rb"] }
 
       it "parses owners correctly" do
-        expect(subject).to eq(["@duplicate", "@org/blog", "@owner", "data@example.com"])
+        expect(subject).to eq(["data@example.com", "@owner", "@duplicate", "@org/blog"])
       end
     end
 
@@ -65,7 +65,15 @@ RSpec.describe Owners do
       let(:paths) { ["example/db/schema.rb"] }
 
       it "parses owners correctly" do
-        expect(subject).to eq(["@multiple", "@org/blog", "@owners"])
+        expect(subject).to eq(["@org/blog", "@multiple", "@owners"])
+      end
+    end
+
+    context "with empty comma separated owners" do
+      let(:paths) { ["example/db/schema.rb"] }
+
+      it "parses owners correctly" do
+        expect(subject).to eq(["@org/blog", "@multiple", "@owners"])
       end
     end
 
@@ -95,7 +103,7 @@ RSpec.describe Owners do
       let(:base_ref) { "ba7cd78" }
 
       it "parses owners correctly" do
-        expect(subject).to eq(["@org/blog", "@whitespace", "data@example.com"])
+        expect(subject).to eq(["@org/blog", "data@example.com", "@whitespace"])
       end
     end
   end

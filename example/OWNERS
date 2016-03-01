@@ -1,6 +1,6 @@
 // comment
 @org/blog
-@multiple,@owners db
+,,,@multiple,@owners,, db
 //comment
 
 ////// comment

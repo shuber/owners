@@ -1,40 +1,66 @@
 module Owners
   # Accepts an array of file paths and returns an array of
-  # owners that have subscribed to the specified files.
+  # {Owner} objects that have subscribed to the files.
   #
   # @api private
   class Search
+    RELATIVE = /^\.?\//
+
     def initialize(files, configs = nil)
       @files = files.map(&:dup)
       @configs = configs
     end
 
-    def owners
-      search do |(path, config), results|
-        owners = config.owners(path.to_s)
-        results.merge(owners) if owners
+    def results
+      owners.each do |owner|
+        subscriptions.each do |path, subscription|
+          if subscription.subscribers.include?(owner)
+            owner.subscriptions[path] << subscription
+          end
+        end
       end
     end
 
     private
 
-    def search(&block)
-      attempts.each_with_object(SortedSet.new, &block).to_a
+    def owners
+      subscribers.map { |subscriber| Owner.new(subscriber) }
     end
 
-    def attempts
-      paths.product(configs)
-    end
-
-    def configs
-      if @configs
-        @configs.map { |file, contents| Config.new(file, contents) }
-      else
-        subscriptions.map { |file| Config.new(file) }
-      end
+    def subscribers
+      subscriptions_by_file
+        .values
+        .flatten
+        .flat_map(&:subscribers)
+        .uniq
     end
 
     def subscriptions
+      subscriptions_by_file.flat_map do |path, subscriptions|
+        [path].product(subscriptions)
+      end
+    end
+
+    def subscriptions_by_file
+      search do |(path, config), results|
+        results[path] += config.subscriptions(path)
+      end
+    end
+
+    def search(&block)
+      results = Hash.new { |hash, key| hash[key] = [] }
+      attempts.each_with_object(results, &block)
+    end
+
+    def attempts
+      paths.map(&:to_s).product(configs)
+    end
+
+    def configs
+      Config.for(@configs || owner_files)
+    end
+
+    def owner_files
       trees.flat_map(&:owner_files).uniq
     end
 
@@ -44,7 +70,7 @@ module Owners
 
     def paths
       @files.map do |file|
-        file.prepend("./") unless file =~ /^\.?\//
+        file.prepend("./") unless file =~ RELATIVE
         Pathname.new(file)
       end
     end
