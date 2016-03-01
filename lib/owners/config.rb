@@ -43,7 +43,7 @@ module Owners
       regex = Regexp.new(filter || ".*")
 
       subscribers.split(",").tap do |owners|
-        owners.clear unless regex =~ path
+        owners.clear unless path =~ regex
       end
     end
   end
