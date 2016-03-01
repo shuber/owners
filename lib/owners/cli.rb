@@ -31,9 +31,11 @@ module Owners
         say owner
 
         if options[:debug]
+          say owner.type, :yellow
+
           owner.subscriptions.each do |path, subscriptions|
             subscriptions.each do |sub|
-              say "  #{path}", :yellow
+              say "  #{path}", :red
               say "  #{sub.file}:#{sub.line} => #{sub.filter}", :blue
             end
 
