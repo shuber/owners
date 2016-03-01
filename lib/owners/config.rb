@@ -5,6 +5,7 @@ module Owners
   # @api private
   class Config
     COMMENT = /^\s*\/\//
+    WILDCARD = /.*/
 
     def initialize(file, contents = nil)
       @contents = contents || file.read
@@ -40,7 +41,7 @@ module Owners
 
     def subscribers(path, subscription)
       subscribers, filter = subscription.split(/\s+/, 2)
-      regex = Regexp.new(filter || ".*")
+      regex = Regexp.new(filter || WILDCARD)
 
       subscribers.split(",").tap do |owners|
         owners.clear unless path =~ regex
