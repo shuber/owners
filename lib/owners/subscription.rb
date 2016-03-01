@@ -20,14 +20,6 @@ module Owners
       @root = config.root
     end
 
-    def comment?
-      subscription =~ COMMENT
-    end
-
-    def empty?
-      subscription.strip.empty?
-    end
-
     def filter
       Regexp.new(@filter || WILDCARD)
     end
@@ -36,20 +28,30 @@ module Owners
       comment? || empty?
     end
 
-    def prefix
-      /\.?\/?#{root}\//
-    end
-
-    def relative(path)
-      path.sub(prefix, "")
-    end
-
     def subscribed?(path)
       path =~ prefix && relative(path) =~ filter
     end
 
     def subscribers
       @subscribers.split(",").reject(&:empty?)
+    end
+
+    private
+
+    def comment?
+      subscription =~ COMMENT
+    end
+
+    def empty?
+      subscription.strip.empty?
+    end
+
+    def prefix
+      /\.?\/?#{root}\//
+    end
+
+    def relative(path)
+      path.sub(prefix, "")
     end
   end
 end
