@@ -50,6 +50,7 @@ module Owners
       regex = Regexp.new(filter || WILDCARD)
 
       subscribers.split(",").tap do |owners|
+        owners.reject!(&:empty?)
         owners.clear unless path =~ regex
       end
     end

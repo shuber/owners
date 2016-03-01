@@ -69,6 +69,14 @@ RSpec.describe Owners do
       end
     end
 
+    context "with empty comma separated owners" do
+      let(:paths) { ["example/db/schema.rb"] }
+
+      it "parses owners correctly" do
+        expect(subject).to eq(["@multiple", "@org/blog", "@owners"])
+      end
+    end
+
     context "with comments" do
       let(:paths) { ["example/comment"] }
 
