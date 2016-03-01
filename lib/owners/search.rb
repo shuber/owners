@@ -29,15 +29,11 @@ module Owners
     end
 
     def configs
-      if @configs
-        @configs.map { |file, contents| Config.new(file, contents) }
-      else
-        subscriptions.map { |file| Config.new(file) }
-      end
+      Config.for(@configs || subscriptions)
     end
 
     def subscriptions
-      trees.flat_map(&:owner_files).uniq
+      trees.flat_map(&:owner_files).uniq.product([nil])
     end
 
     def trees

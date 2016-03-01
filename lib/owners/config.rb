@@ -7,6 +7,12 @@ module Owners
     COMMENT = /^\s*\/\//
     WILDCARD = /.*/
 
+    def self.for(configs)
+      configs.map do |file, contents|
+        new(file, contents)
+      end
+    end
+
     def initialize(file, contents = nil)
       @contents = contents || file.read
       @root = File.dirname(file.to_s)
