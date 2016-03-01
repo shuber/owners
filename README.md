@@ -34,6 +34,8 @@ jane@your-org.com
 #some_slack_channel
 ```
 
+#### Filters
+
 The `OWNERS` file also supports filtering paths with regular expressions. Any whitespace between these filters and their corresponding subscribers is ignored.
 
 ```
@@ -42,6 +44,8 @@ The `OWNERS` file also supports filtering paths with regular expressions. Any wh
 bob@demo.com  lib/bobs_special_file.rb
 #whitespace   path/with spaces/is all part/of the filter.txt
 ```
+
+#### Multiple subscribers
 
 Subscribers can be listed multiple times in an `OWNERS` file.
 
@@ -56,6 +60,8 @@ Multiple comma separated subscribers can be listed for the same filter.
 @data,@team-leads db
 ```
 
+#### Comments
+
 Comments are supported by prefixing lines with `//`.
 
 ```
@@ -66,11 +72,15 @@ Comments are supported by prefixing lines with `//`.
 @data,@team-leads db
 ```
 
+#### Finding owners
+
 Find the owners for specific files by passing them to the `Owners.for` method.
 
 ```ruby
 Owners.for("app/models/user.rb", "db/schema.rb") #=> ["@data", "@team-leads"]
 ```
+
+#### Git diff integration
 
 To find the owners for files changed with `git diff` use the `Owners.for_diff` method.
 
@@ -79,19 +89,49 @@ Owners.for_diff("your-feature-branch-or-ref", "optional-base-ref-defaults-to-mas
 ```
 
 
-## CLI
+## Command line interface
 
-This gem also comes with a convenient `owners` command line interface. Each owner is printed out and separated by newlines.
+This gem also comes with a convenient `owners` CLI. Each owner is printed out and separated by newlines.
 
 ```bash
 owners for .env app/controllers/posts_controller.rb app/models/user.rb
 ```
 
 ```
-@infrastructure
-@api
+#infrastructure
+@api/internal
 @data
 ```
+
+#### Debugging and managing subscriptions
+
+The `--debug` option outputs additional information for subscriptions.
+
+```bash
+owners for --debug .env app/controllers/posts_controller.rb app/models/user.rb
+```
+
+```
+#infrastructure
+tag
+  ./.env
+  ./OWNERS:1 => (?-mix:\.env)
+
+@api/internal
+group
+  ./app/controllers/posts_controller.rb
+  ./OWNERS:2 => (?-mix:app/(controllers|models))
+
+  ./app/models/user.rb
+  ./OWNERS:2 => (?-mix:app/(controllers|models))
+
+@data
+mention
+  ./app/models/user.rb
+  ./OWNERS:3 => (?-mix:app/models)
+```
+
+#### Git diff integration
 
 The `git diff` integration works in the command line as well.
 
@@ -110,6 +150,16 @@ See `owners help` for more information.
 * `Owners.file=`
 * `Owners.for`
 * `Owners.for_diff`
+* `Owners::Owner#type`
+* `Owners::Owner#subscriptions`
+* `Owners::Subscription#file`
+* `Owners::Subscription#filter`
+* `Owners::Subscription#line`
+* `Owners::Subscription#metadata?`
+* `Owners::Subscription#root`
+* `Owners::Subscription#subscribed?`
+* `Owners::Subscription#subscribers`
+* `Owners::Subscription#subscription`
 
 
 ## Testing
@@ -130,4 +180,4 @@ bundle exec rspec
 
 ## License
 
-[MIT](https://github.com/shuber/owners/blob/master/LICENSE)  - Copyright © 2015 Sean Huber
+[MIT](https://github.com/shuber/owners/blob/master/LICENSE) - Copyright © 2015 Sean Huber
