@@ -4,6 +4,8 @@ module Owners
   #
   # @api private
   class Search
+    RELATIVE = /^\.?\//
+
     def initialize(files, configs = nil)
       @files = files.map(&:dup)
       @configs = configs
@@ -44,7 +46,7 @@ module Owners
 
     def paths
       @files.map do |file|
-        file.prepend("./") unless file =~ /^\.?\//
+        file.prepend("./") unless file =~ RELATIVE
         Pathname.new(file)
       end
     end
