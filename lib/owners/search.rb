@@ -33,7 +33,7 @@ module Owners
     end
 
     def subscriptions
-      trees.flat_map(&:owner_files).uniq.product([nil])
+      trees.flat_map(&:owner_files).uniq
     end
 
     def trees
