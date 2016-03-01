@@ -39,8 +39,8 @@ module Owners
     end
 
     def subscribers(path, subscription)
-      subscribers, pattern = subscription.split(/\s+/, 2)
-      regex = Regexp.new(pattern || ".*")
+      subscribers, filter = subscription.split(/\s+/, 2)
+      regex = Regexp.new(filter || ".*")
 
       subscribers.split(",").tap do |owners|
         owners.clear unless regex =~ path
