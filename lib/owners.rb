@@ -1,9 +1,9 @@
-require "delegate"
 require "pathname"
 require "set"
 require "thor"
 require_relative "owners/cli"
 require_relative "owners/config"
+require_relative "owners/owner"
 require_relative "owners/search"
 require_relative "owners/subscription"
 require_relative "owners/tree"
@@ -27,7 +27,7 @@ module Owners
     #
     # @api public
     def for(*files)
-      Search.new(files).owners
+      Search.new(files).results
     end
 
     # Accepts a git ref and an optional base ref and returns
@@ -49,7 +49,7 @@ module Owners
         hash.update(file => contents)
       end
 
-      Search.new(files, configs).owners
+      Search.new(files, configs).results
     end
   end
 end

@@ -1,6 +1,9 @@
 module Owners
-  # Parses an OWNERS file and returns an array of
-  # {Subscription} objects for a specified file path.
+  # Represents a single OWNERS file.
+  #
+  # It parses OWNERS files and returns an array of
+  # {Subscription} objects is returned for a specified
+  # file path.
   #
   # @api private
   class Config

@@ -1,30 +1,31 @@
 module Owners
   # Represents a single line of an OWNERS file.
   #
+  # It contains some useful methods for inspecting the
+  # subscriptions themselves like the file, line, and
+  # filter, and subscribers.
+  #
   # @api public
   class Subscription
-    extend Forwardable
-
     COMMENT = /^\s*\/\//
     WILDCARD = /.*/
 
-    attr_reader :line
-
-    def_delegators :@config, :file, :root
+    attr_reader :file, :line, :root, :subscription
 
     def initialize(subscription, line, config)
       @subscribers, @filter = subscription.split(/\s+/, 2)
       @subscription = subscription
       @line = line
-      @config = config
+      @file = config.file
+      @root = config.root
     end
 
     def comment?
-      @subscription =~ COMMENT
+      subscription =~ COMMENT
     end
 
     def empty?
-      @subscription.strip.empty?
+      subscription.strip.empty?
     end
 
     def filter

@@ -22,7 +22,7 @@ RSpec.describe Owners::CLI do
     end
 
     context "with a specified file" do
-      before { args << "--file" << "SOMETHING_ELSE" }
+      before { args << "-f" << "SOMETHING_ELSE" }
 
       it "overrides the default OWNERS filename" do
         begin
@@ -32,6 +32,25 @@ RSpec.describe Owners::CLI do
         end
       end
     end
+
+    context "without debugging" do
+      before { args << "-d" }
+
+      it "parses owners correctly" do
+        expected = <<-OUTPUT
+@org/auth
+  ./example/app/controllers/users_controller.rb
+  ./example/app/OWNERS:1 => (?-mix:user)
+
+@org/blog
+  ./example/app/controllers/users_controller.rb
+  ./example/OWNERS:2 => (?-mix:.*)
+
+        OUTPUT
+
+        expect(subject).to eq(expected)
+      end
+    end
   end
 
   describe "for_diff" do
@@ -39,7 +58,7 @@ RSpec.describe Owners::CLI do
 
     context "without a specified file" do
       it "parses owners correctly" do
-        expect(subject).to eq("@org/blog\n@whitespace\ndata@example.com\n")
+        expect(subject).to eq("@org/blog\ndata@example.com\n@whitespace\n")
       end
     end
 
