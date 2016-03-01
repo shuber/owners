@@ -13,8 +13,9 @@ module Owners
 
     def owners
       search do |(path, config), results|
-        owners = config.owners(path.to_s)
-        results.merge(owners) if owners
+        owners = config.subscriptions(path.to_s)
+        subscribers = owners.flat_map(&:subscribers)
+        results.merge(subscribers)
       end
     end
 

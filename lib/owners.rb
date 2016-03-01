@@ -1,9 +1,11 @@
+require "delegate"
 require "pathname"
 require "set"
 require "thor"
 require_relative "owners/cli"
 require_relative "owners/config"
 require_relative "owners/search"
+require_relative "owners/subscription"
 require_relative "owners/tree"
 require_relative "owners/version"
 

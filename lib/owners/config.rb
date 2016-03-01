@@ -1,11 +1,10 @@
 module Owners
-  # Parses an OWNERS file and returns an array of owners
-  # that have subscribed to a specified file path.
+  # Parses an OWNERS file and returns an array of
+  # {Subscription} objects for a specified file path.
   #
   # @api private
   class Config
-    COMMENT = /^\s*\/\//
-    WILDCARD = /.*/
+    attr_reader :file, :root
 
     def self.for(configs)
       configs.map do |file, contents|
@@ -14,45 +13,35 @@ module Owners
     end
 
     def initialize(file, contents = nil)
+      @file = file.to_s
       @contents = contents || file.read
-      @root = File.dirname(file.to_s)
+      @root = File.dirname(@file)
     end
 
-    def owners(path)
-      if path =~ prefix
-        relative = path.sub(prefix, "")
-
-        search do |subscription, results|
-          owners = subscribers(relative, subscription)
-          results.push(*owners)
+    def subscriptions(path)
+      search do |subscription, results|
+        if subscription.subscribed?(path)
+          results << subscription
         end
       end
     end
 
     private
 
-    def prefix
-      /\.?\/?#{@root}\//
-    end
-
     def search(&block)
-      subscriptions.each_with_object([], &block)
+      attempts
+        .reject(&:metadata?)
+        .each_with_object([], &block)
     end
 
-    def subscriptions
-      @contents.split("\n").reject do |subscription|
-        subscription.empty? || subscription =~ COMMENT
+    def attempts
+      lines.map.with_index do |subscription, index|
+        Subscription.new(subscription, index + 1, self)
       end
     end
 
-    def subscribers(path, subscription)
-      subscribers, filter = subscription.split(/\s+/, 2)
-      regex = Regexp.new(filter || WILDCARD)
-
-      subscribers.split(",").tap do |owners|
-        owners.reject!(&:empty?)
-        owners.clear unless path =~ regex
-      end
+    def lines
+      @contents.split("\n")
     end
   end
 end
