@@ -70,14 +70,57 @@ Comments are supported by prefixing lines with `//`.
   // even this one with whitespace
 
 @data,@team-leads db
+
+#internal .env
 ```
 
 #### Finding owners
 
 Find the owners for specific files by passing them to the `Owners.for` method.
+This returns an array of `Owner` objects which are simple wrappers around
+`String` with a few extra methods.
 
 ```ruby
-Owners.for("app/models/user.rb", "db/schema.rb") #=> ["@data", "@team-leads"]
+owners = Owners.for("db/schema.rb", ".env") #=> ["@data", "#internal"]
+```
+
+The owner's `type` can be one of `%i(alert email group label mention path tag)`.
+
+```ruby
+owners.first.type #=> :mention
+owners.last.type  #=> :tag
+```
+
+The `paths` method returns an array of owned file paths that triggered the match.
+
+```ruby
+owners.first.paths #=> ["db/schema.rb"]
+owners.last.paths  #=> [".env"]
+```
+
+The `subscriptions` method allows us to inspect the rules that triggered a match.
+
+```ruby
+owners.each do |owner|
+  puts owner
+
+  owner.subscriptions.each do |path, subscriptions|
+    puts "  #{path}"
+
+    subscriptions.each do |subscription|
+      puts "  #{subscription.file}:#{subscription.line} => #{subscription.filter}"
+    end
+  end
+end
+```
+
+```
+@data
+  db/schema.rb
+  OWNERS:5 => (?-mix:db)
+#internal
+  .env
+  OWNERS:7 => (?-mix:.env)
 ```
 
 #### Git diff integration
@@ -114,16 +157,16 @@ owners for --debug .env app/controllers/posts_controller.rb app/models/user.rb
 ```
 #infrastructure
 tag
-  ./.env
-  ./OWNERS:1 => (?-mix:\.env)
+  .env
+  OWNERS:1 => (?-mix:\.env)
 
 @api/internal
 group
-  ./app/controllers/posts_controller.rb
-  ./OWNERS:2 => (?-mix:app/(controllers|models))
+  app/controllers/posts_controller.rb
+  OWNERS:2 => (?-mix:app/(controllers|models))
 
-  ./app/models/user.rb
-  ./OWNERS:2 => (?-mix:app/(controllers|models))
+  app/models/user.rb
+  OWNERS:2 => (?-mix:app/(controllers|models))
 
 @data
 mention

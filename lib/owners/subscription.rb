@@ -16,7 +16,7 @@ module Owners
       @subscribers, @filter = subscription.split(/\s+/, 2)
       @subscription = subscription
       @line = line
-      @file = config.file
+      @file = config.file.sub("./", "")
       @root = config.root
     end
 

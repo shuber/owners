@@ -1,4 +1,18 @@
 RSpec.describe Owners::Owner do
+  describe "#paths" do
+    subject { described_class.new("test") }
+
+    it "parses paths correctly" do
+      expect(subject.paths).to be_empty
+
+      subject.subscriptions["testing"] << nil
+      expect(subject.paths).to eq(["testing"])
+
+      subject.subscriptions["again"] << nil
+      expect(subject.paths).to eq(["testing", "again"])
+    end
+  end
+
   describe "#type" do
     subject { described_class.new(owner).type }
 

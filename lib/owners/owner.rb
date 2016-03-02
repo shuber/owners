@@ -6,6 +6,10 @@ module Owners
   #
   # @api public
   class Owner < SimpleDelegator
+    def paths
+      subscriptions.keys
+    end
+
     def subscriptions
       @subscriptions ||= Hash.new { |hash, key| hash[key] = [] }
     end

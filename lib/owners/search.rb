@@ -43,7 +43,8 @@ module Owners
 
     def subscriptions_by_file
       search do |(path, config), results|
-        results[path] += config.subscriptions(path)
+        relative = path.sub("./", "")
+        results[relative] += config.subscriptions(path)
       end
     end
 
