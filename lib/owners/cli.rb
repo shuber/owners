@@ -14,12 +14,7 @@ module Owners
 
     desc "for [FILES...]", "List owners for a set of files"
     def for(*files)
-      files = stdin_files unless files.any?
-
-      Owners.file = options[:file] if options[:file]
-      Owners.for(*files).each do |owner|
-        output(owner)
-      end
+      run(:for, files)
     end
 
     desc "for_diff REF [BASE_REF]", "List owners for a set of git changes"
@@ -32,12 +27,7 @@ module Owners
 
     desc "missing_for [FILES...]", "List files that don't have owners"
     def missing_for(*files)
-      files = stdin_files unless files.any?
-
-      Owners.file = options[:file] if options[:file]
-      Owners.missing_for(*files).each do |owner|
-        output(owner)
-      end
+      run(:missing_for, files)
     end
 
     no_commands do
@@ -55,6 +45,16 @@ module Owners
 
             say
           end
+        end
+      end
+
+      def run(method, files)
+        files = stdin_files unless files.any?
+
+        Owners.file = options[:file] if options[:file]
+
+        Owners.send(method, *files).each do |owner|
+          output(owner)
         end
       end
 

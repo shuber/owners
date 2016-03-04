@@ -60,7 +60,7 @@ RSpec.describe Owners::Owner do
       let(:owner) { "/one/two" }
 
       it "parses type correctly" do
-        expect(subject).to eq(:path)
+        expect(subject).to eq(:label)
       end
     end
 

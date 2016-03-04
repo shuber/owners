@@ -26,8 +26,6 @@ module Owners
         :mention
       when /^#/
         :tag
-      when /\//
-        :path
       else
         :label
       end

@@ -84,7 +84,7 @@ This returns an array of `Owner` objects which are simple wrappers around
 owners = Owners.for("db/schema.rb", ".env") #=> ["@data", "#internal"]
 ```
 
-The owner's `type` can be one of `%i(alert email group label mention path tag)`.
+The owner's `type` can be one of `%i(alert email group label mention tag)`.
 
 ```ruby
 owners.first.type #=> :mention
