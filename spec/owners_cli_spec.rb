@@ -36,7 +36,7 @@ RSpec.describe Owners::CLI do
       end
     end
 
-    context "without debugging" do
+    context "with debugging" do
       before { args << "-d" }
 
       it "parses owners correctly" do
