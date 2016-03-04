@@ -1,5 +1,7 @@
 module Owners
   class CLI < Thor
+    include Timeout
+
     class_option :debug,
       aliases: %w(-d),
       desc: "Output additional subscription debugging info",
@@ -12,6 +14,8 @@ module Owners
 
     desc "for [FILES...]", "List owners for a set of files"
     def for(*files)
+      files = stdin_files unless files.any?
+
       Owners.file = options[:file] if options[:file]
       Owners.for(*files).each do |owner|
         output(owner)
@@ -42,6 +46,12 @@ module Owners
             say
           end
         end
+      end
+
+      def stdin_files
+        timeout(1) { $stdin.read.split("\n") }
+      rescue
+        []
       end
     end
   end

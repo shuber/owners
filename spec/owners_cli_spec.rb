@@ -1,14 +1,17 @@
 RSpec.describe Owners::CLI do
-  subject { capture { command } }
+  subject { capture(stdin) { command } }
 
   let(:command) { described_class.start(args) }
+  let(:stdin) { "" }
 
-  def capture
+  def capture(stdin)
+    stdin, $stdin = $stdin, StringIO.new(stdin)
     stdout = $stdout
     $stdout = StringIO.new
     yield
     $stdout.string
   ensure
+    $stdin = stdin
     $stdout = stdout
   end
 
@@ -51,6 +54,24 @@ group
         OUTPUT
 
         expect(subject).to eq(expected)
+      end
+    end
+
+    context "with stdin" do
+      let(:stdin) { "example/app/controllers/users_controller.rb" }
+
+      context "without paths" do
+        let(:args) { ["for"] }
+
+        it "reads paths from stdin" do
+          expect(subject).to eq("@org/auth\n@org/blog\n")
+        end
+      end
+
+      context "with paths" do
+        it "does not read paths from stdin" do
+          expect(subject).to eq("@org/auth\n@org/blog\n")
+        end
       end
     end
   end
