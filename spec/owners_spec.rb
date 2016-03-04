@@ -107,4 +107,19 @@ RSpec.describe Owners do
       end
     end
   end
+
+  describe ".missing_for" do
+    subject { described_class.missing_for(*paths) }
+
+    context "with multiple paths" do
+      let(:paths) {[
+        "example/app/controllers/posts_controller.rb",
+        "path/without/owner.rb",
+      ]}
+
+      it "parses missing files missing owners correctly" do
+        expect(subject).to eq(["path/without/owner.rb"])
+      end
+    end
+  end
 end

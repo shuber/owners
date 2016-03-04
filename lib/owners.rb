@@ -29,7 +29,7 @@ module Owners
     #
     # @api public
     def for(*files)
-      Search.new(files).results
+      Search.new(files).owners
     end
 
     # Accepts a git ref and an optional base ref and returns
@@ -51,7 +51,16 @@ module Owners
         hash.update(file => contents)
       end
 
-      Search.new(files, configs).results
+      Search.new(files, configs).owners
+    end
+
+    # Accepts a list of file paths and returns an array of
+    # the ones that do not have subscribed owners.
+    #
+    # @api public
+    def missing_for(*files)
+      paths = Search.new(files, shallow: true).paths
+      files - paths
     end
   end
 end

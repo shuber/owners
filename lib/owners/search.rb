@@ -6,26 +6,29 @@ module Owners
   class Search
     RELATIVE = /^\.?\//
 
-    def initialize(files, configs = nil)
+    def initialize(files, configs = nil, shallow: false)
       @files = files.map(&:dup)
       @configs = configs
+      @shallow = shallow
     end
 
-    def results
-      owners.each do |owner|
-        subscriptions.each do |path, subscription|
-          if subscription.subscribers.include?(owner)
-            owner.subscriptions[path] << subscription
+    def paths
+      subscriptions_by_file.keys
+    end
+
+    def owners
+      subscribers.map do |subscriber|
+        Owner.new(subscriber).tap do |owner|
+          subscriptions.each do |path, subscription|
+            if subscription.subscribers.include?(owner)
+              owner.subscriptions[path] << subscription
+            end
           end
         end
       end
     end
 
     private
-
-    def owners
-      subscribers.map { |subscriber| Owner.new(subscriber) }
-    end
 
     def subscribers
       subscriptions_by_file
@@ -44,7 +47,8 @@ module Owners
     def subscriptions_by_file
       search do |(path, config), results|
         relative = path.sub("./", "")
-        results[relative] += config.subscriptions(path)
+        matches = config.subscriptions(path, @shallow)
+        results[relative] += matches if matches.any?
       end
     end
 
@@ -54,7 +58,7 @@ module Owners
     end
 
     def attempts
-      paths.map(&:to_s).product(configs)
+      pathnames.map(&:to_s).product(configs)
     end
 
     def configs
@@ -66,10 +70,10 @@ module Owners
     end
 
     def trees
-      paths.map { |path| Tree.new(path) }
+      pathnames.map { |path| Tree.new(path) }
     end
 
-    def paths
+    def pathnames
       @files.map do |file|
         file.prepend("./") unless file =~ RELATIVE
         Pathname.new(file)

@@ -30,6 +30,16 @@ module Owners
       end
     end
 
+    desc "missing_for [FILES...]", "List files that don't have owners"
+    def missing_for(*files)
+      files = stdin_files unless files.any?
+
+      Owners.file = options[:file] if options[:file]
+      Owners.missing_for(*files).each do |owner|
+        output(owner)
+      end
+    end
+
     no_commands do
       def output(owner)
         say owner
