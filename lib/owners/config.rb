@@ -21,7 +21,7 @@ module Owners
       @root = File.dirname(@file)
     end
 
-    def subscriptions(path, shallow = false)
+    def subscriptions(path, shallow)
       search do |subscription, results|
         if subscription.subscribed?(path)
           results << subscription
