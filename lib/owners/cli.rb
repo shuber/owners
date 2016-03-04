@@ -60,7 +60,7 @@ module Owners
 
       def stdin_files
         timeout(1) { $stdin.read.split("\n") }
-      rescue
+      rescue Timeout::Error
         []
       end
     end
