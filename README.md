@@ -123,6 +123,14 @@ end
   OWNERS:7 => (?-mix:.env)
 ```
 
+#### Finding files without owners
+
+Stay on top of owner subscriptions by finding files that don't have any owners yet.
+
+```ruby
+Owners.missing_for(".env", "some/other/file.rb") #=> ["some/other/file.rb"]
+```
+
 #### Git diff integration
 
 To find the owners for files changed with `git diff` use the `Owners.for_diff` method.
@@ -193,6 +201,7 @@ See `owners help` for more information.
 * `Owners.file=`
 * `Owners.for`
 * `Owners.for_diff`
+* `Owners.missing_for`
 * `Owners::Owner#type`
 * `Owners::Owner#subscriptions`
 * `Owners::Subscription#file`
