@@ -35,16 +35,21 @@ module Owners
         say owner
 
         if options[:debug]
-          say owner.type, :yellow
+          last_sub = nil
 
           owner.subscriptions.each do |path, subscriptions|
             subscriptions.each do |sub|
-              say "  #{path}", :red
-              say "  #{sub.file}:#{sub.line} => #{sub.filter}", :blue
-            end
+              if last_sub != sub
+                say if last_sub
+                say "  #{sub}", :blue
+              end
 
-            say
+              say "    #{path}", :red unless path == sub.source
+              last_sub = sub
+            end
           end
+
+          say
         end
       end
 

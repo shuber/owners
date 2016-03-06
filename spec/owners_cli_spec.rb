@@ -42,14 +42,12 @@ RSpec.describe Owners::CLI do
       it "parses owners correctly" do
         expected = <<-OUTPUT
 @org/auth
-group
-  example/app/controllers/users_controller.rb
-  example/app/OWNERS:1 => (?-mix:user)
+  user example/app/OWNERS:1
+    example/app/controllers/users_controller.rb
 
 @org/blog
-group
-  example/app/controllers/users_controller.rb
-  example/OWNERS:2 => (?-mix:.*)
+  .* example/OWNERS:2
+    example/app/controllers/users_controller.rb
 
         OUTPUT
 

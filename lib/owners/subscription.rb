@@ -7,6 +7,8 @@ module Owners
   #
   # @api public
   class Subscription
+    include Comparable
+
     COMMENT = /^\s*\/\//
     WILDCARD = /.*/
 
@@ -20,12 +22,24 @@ module Owners
       @root = config.root
     end
 
+    def <=>(other)
+      location <=> other.location
+    end
+
     def filter
       Regexp.new(@filter || WILDCARD)
     end
 
+    def location
+      [file, line].join(":")
+    end
+
     def metadata?
       comment? || empty?
+    end
+
+    def source
+      filter.source
     end
 
     def subscribed?(path)
@@ -34,6 +48,10 @@ module Owners
 
     def subscribers
       @subscribers.split(",").reject(&:empty?)
+    end
+
+    def to_s
+      [source, location].join(" ")
     end
 
     private
