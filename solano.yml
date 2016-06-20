@@ -1,5 +1,3 @@
 ruby_version: ruby-2.3.1-p112
 test_pattern:
   - spec/**/*_spec.rb
-tests:
-  - bundle exec rspec
