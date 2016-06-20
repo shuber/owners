@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe Owners do
   describe ".for" do
     subject { described_class.for(*paths) }

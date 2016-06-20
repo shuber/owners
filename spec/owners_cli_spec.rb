@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe Owners::CLI do
   subject { capture(stdin) { command } }
 

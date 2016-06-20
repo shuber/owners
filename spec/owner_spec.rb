@@ -1,3 +1,5 @@
+require "spec_helper"
+
 RSpec.describe Owners::Owner do
   describe "#paths" do
     subject { described_class.new("test") }
